@@ -55,21 +55,24 @@ local PID = game.PlaceId
 
 if PID == 79137923166591 then -- Slap
 	InputsTab:Dropdown({
-	Title = '[UPD] Slap',
-	Options = {'Insta Dodge / no key / PC', 'Soon', 'Soon', 'Soon'},
-	PlaceHolder = 'Select a script...',
-	CallBack = function(option)
-		print('Script selected:', option)
-		if option == "Insta Dodge / no key / PC" then
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/rapierhub/loader/refs/heads/main/Pandemonium"))()
-		end
-		syde:Notify({
-			Title = 'Loading Script',
-			Content = 'Selected: ' .. option,
-			Duration = 2
-		})
-	end,
+		Title = '[UPD] Slap',
+		Options = {'Insta Dodge (PC)', 'Soon', 'Soon', 'Soon'},
+		PlaceHolder = 'Select a script...',
+		CallBack = function(option)
+			print('Script selected:', option)
+
+			if option == "Insta Dodge (PC)" then
+				loadstring(game:HttpGet("https://raw.githubusercontent.com/rapierhub/loader/refs/heads/main/Pandemonium"))()
+			end
+
+			syde:Notify({
+				Title = 'Loading Script',
+				Content = 'Selected: ' .. option,
+				Duration = 2
+			})
+		end,
 	})
 end
+
 
 syde:LoadSaveConfig()
