@@ -1,19 +1,15 @@
-local syde = loadstring(game:HttpGet("https://raw.githubusercontent.com/essencejs/syde/refs/heads/main/source",true))()
+-- carrega syde
+local syde = loadstring(game:HttpGet("https://raw.githubusercontent.com/essencejs/syde/refs/heads/main/source", true))()
 
+-- configurações iniciais (mantive a sua configuração, só limpei Socials)
 syde:Load({
 	Logo = '9980452590',
 	Name = 'Boga Hub',
-	Status = 'Stable', -- {Stable, Unstable, Detected, Patched}
-	Accent = Color3.fromRGB(106, 187, 255), -- Window Accent Theme
-	HitBox = Color3.fromRGB(123, 230, 255), -- Window HitBox Theme (ex. Toggle Color)
-	AutoLoad = false, -- Does Not Work !
-	Socials = {    -- Allows 1 Large and 2 Small Blocks
-		[[--{
-			Name = 'Syde';
-			Style = 'Discord';
-			Size = "Large";
-			CopyToClip = true -- Copy To Clip (coming very soon)
-		},]]
+	Status = 'Stable',
+	Accent = Color3.fromRGB(106, 187, 255),
+	HitBox = Color3.fromRGB(123, 230, 255),
+	AutoLoad = false,
+	Socials = {
 		{
 			Name = 'GitHub';
 			Style = 'GitHub';
@@ -21,40 +17,42 @@ syde:Load({
 			CopyToClip = true
 		}
 	},
-	ConfigurationSaving = { -- Allows Config Saving
+	ConfigurationSaving = {
 		Enabled = true,
 		FolderName = 'BogaHub',
 		FileName = "BogaHub"
 	},
-	[[--AutoJoinDiscord = { 
-		Enabled = true, -- Prompt the user to join your Discord server if their executor supports it
-		Invite = "CZRZBwPz", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ ABCD would be ABCD
-		RememberJoins = false -- Set this to false to make them join the discord every time they load it up
-	},]]
 })
 
 local Window = syde:Init({
-	Title = 'Boga Hub'; -- Set Title
-	SubText = 'Made With 💓 By @boda_Grande' -- Set Subtitle
+	Title = 'Boga Hub';
+	SubText = 'Made With 💓 By @boda_Grande'
 })
 
 local MainTab  = Window:InitTab({ Title = 'Main' })
 local GameTab  = Window:InitTab({ Title = 'Game' })
 
-main:Section('Github')
-main:Paragraph({
+-- conteúdo da aba Main (usando o mesmo nome)
+MainTab:Section('Github')
+MainTab:Paragraph({
 	Title = 'Welcome to Boga Hub',
 	Content = 'Boga Hub was made for Roblox exploiting, developed by @boda_Grande, and is open-source on GitHub.'
 })
-main:Paragraph({
+MainTab:Paragraph({
 	Title = 'Link',
 	Content = 'https://github.com/BogaDev221/BogaHub'
 })
 
-local PID = game.PlaceId
+-- seção de inputs na aba Game
+local InputsSection = GameTab:Section('Scripts')
 
+-- debug: mostra qual é o PlaceId real
+local PID = game.PlaceId
+print("DEBUG: PlaceId =", PID)
+
+-- substitua esse número pelo PlaceId correto do Slap se necessário
 if PID == 79137923166591 then -- Slap
-	InputsTab:Dropdown({
+	InputsSection:Dropdown({
 		Title = '[UPD] Slap',
 		Options = {'Insta Dodge (PC)', 'Soon', 'Soon', 'Soon'},
 		PlaceHolder = 'Select a script...',
@@ -62,7 +60,19 @@ if PID == 79137923166591 then -- Slap
 			print('Script selected:', option)
 
 			if option == "Insta Dodge (PC)" then
-				loadstring(game:HttpGet("https://raw.githubusercontent.com/rapierhub/loader/refs/heads/main/Pandemonium"))()
+				-- tenta carregar o script com pcall para não quebrar a UI
+				local ok, err = pcall(function()
+					loadstring(game:HttpGet("https://raw.githubusercontent.com/rapierhub/loader/refs/heads/main/Pandemonium", true))()
+				end)
+				if not ok then
+					warn("Failed to load script:", err)
+					syde:Notify({
+						Title = 'Error',
+						Content = 'Falha ao carregar o script',
+						Duration = 3
+					})
+					return
+				end
 			end
 
 			syde:Notify({
@@ -72,7 +82,12 @@ if PID == 79137923166591 then -- Slap
 			})
 		end,
 	})
+else
+	-- mensagem útil enquanto estiver testando em outro jogo
+	InputsSection:Paragraph({
+		Title = 'Game not supported',
+		Content = 'This script only runs in Slap. PlaceId detected: ' .. tostring(PID)
+	})
 end
-
 
 syde:LoadSaveConfig()
