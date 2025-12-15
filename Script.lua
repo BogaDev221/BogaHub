@@ -46,7 +46,7 @@ local InputsSection = GameTab:Section('Scripts')
 local PID = game.PlaceId
 print("DEBUG PlaceId:", PID)
 
-if PID == 6403373529 then -- EXEMPLO, TROQUE PELO REAL
+if PID == 79137923166591 then -- EXEMPLO, TROQUE PELO REAL
 	InputsSection:Dropdown({
 		Title = '[UPD] Slap',
 		Options = {'Insta Dodge (PC)'},
