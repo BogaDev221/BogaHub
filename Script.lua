@@ -13,7 +13,10 @@ local NebulaIcons = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/neb
 
 -- Jogos suportados
 local GamesSupported = {
-    [79137923166591] = "[UPD] Slap Battles",
+    [79137923166591] = "[UPD] Slap",
+    [142823291] = "Murder Mystery 2",
+    [893973440] = "Flee the Facility",
+    [18687417158] = "Fosaken"
     -- [PlaceId] = "Nome do Jogo",
 }
 
@@ -107,24 +110,24 @@ print("========================================")
 -- ==========================================
 
 local UniversalTab = Tabs.UniversalTab:CreateTab({
-    Name = "",
+    Name = "Universal Scripts",
     Icon = NebulaIcons:GetIcon('public', 'Material'),
     Columns = 1,
 }, "Universal_TAB")
 
 local UniversalGroupbox = UniversalTab:CreateGroupbox({
-    Name = "",
+    Name = "Universal Scripts",
     Column = 1,
 }, "Universal_GROUPBOX")
 
 local GameTab = Tabs.GameTab:CreateTab({
-    Name = "",
+    Name = GameName,
     Icon = NebulaIcons:GetIcon('sports_esports', 'Material'),
     Columns = 1,
 }, "GAME_TAB")
 
 local GameGroupbox = GameTab:CreateGroupbox({
-    Name = "",
+    Name = GameName,
     Column = 1,
 }, "GAME_GROUPBOX")
 
@@ -165,14 +168,14 @@ UniversalGroupbox:CreateLabel({
 }, "Uni_Title")
 
 UniversalGroupbox:CreateButton({
-    Name = "Infinite Yield - 2.0",
+    Name = "Infinite Yield / Sirius Hub - 2.0",
     Icon = NebulaIcons:GetIcon('all_inclusive', 'Material'),
     Tooltip = "Creditos: Sirius + Infinite Yield",
     Style = 1,
     Callback = function()
         LoadScript(
             'https://rawscripts.net/raw/Universal-Script-Sirius-Reborn-Hub-74262',
-            "Inifinite Yield - 2.0"
+            "Infinite Yield / Sirius Hub - 2.0"
          )
     end,
 }, "Infinite_Yield_2")
@@ -185,7 +188,7 @@ UniversalGroupbox:CreateButton({
     Callback = function()
         LoadScript(
             'https://raw.githubusercontent.com/DarkNetworks/Infinite-Yield/main/latest.lua',
-            "Inifinite Yield - 1.0"
+            "Infinite Yield - 1.0"
          )
     end,
 }, "Infinite_Yield_1")
@@ -209,7 +212,7 @@ if PlaceId == 79137923166591 then
         Name = "Insta Dodge (PC)",
         Icon = NebulaIcons:GetIcon('bolt', 'Material'),
         Tooltip = "",
-        Style = 1,
+        Style = 2,
         Callback = function()
             LoadScript(
                 'https://raw.githubusercontent.com/rapierhub/loader/refs/heads/main/Pandemonium',
@@ -217,7 +220,24 @@ if PlaceId == 79137923166591 then
             )
         end,
     }, "BTN_INSTA_DODGE")
-
+elseif PlaceId == 142823291
+   or PlaceId == 893973440
+   or PlaceId == 18687417158 then-- MM2 / FTF / FSK
+    print("[BOGA HUB] Carregando scripts para MM2 /FTF / FSK...")
+    
+    -- Botão Yarhm
+    GameGroupbox:CreateButton({
+        Name = "Yarhm (PC & Mobile)",
+        Icon = NebulaIcons:GetIcon('bolt', 'Material'),
+        Tooltip = "",
+        Style = 1,
+        Callback = function()
+            LoadScript(
+                'https://raw.githubusercontent.com/Joystickplays/psychic-octo-invention/main/yarhm.lua',
+                "Yarhm"
+            )
+        end,
+    }, "BTN_Yarhm")
 else
     -- JOGO NÃO SUPORTADO
     print("[BOGA HUB] Jogo não suportado - PlaceId:", PlaceId)
