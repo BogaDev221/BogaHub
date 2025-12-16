@@ -1,101 +1,198 @@
-local Starlight = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/starlight"))()  
+-- ==========================================
+-- BOGA HUB - Script Melhorado
+-- Versão: 0.12
+-- ==========================================
 
+-- Carregamento das bibliotecas
+local Starlight = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/starlight"))()  
 local NebulaIcons = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/nebula-icon-library-loader"))()
 
-local Window = Starlight:CreateWindow({
-    Name = "Boga Hub",
-    Subtitle = "v0.11",
-    Icon = 9980452590,
+-- ==========================================
+-- CONFIGURAÇÕES
+-- ==========================================
 
+-- Jogos suportados
+local GamesSupported = {
+    [79137923166591] = "[UPD] Slap Battles",
+    -- [PlaceId] = "Nome do Jogo",
+}
+
+-- Configuração da janela
+local WindowConfig = {
+    Name = "Boga Hub",
+    Subtitle = "v0.12",
+    Icon = 9117914849,
+    
     LoadingSettings = {
         Title = "Boga Hub",
-        Subtitle = "Created by @boda_Grande",
-        Logo = 9980452590
+        Subtitle = "Criado por @boda_Grande",
+        Logo = 9117914849
     },
-
+    
     FileSettings = {
         ConfigFolder = "BogaHub"
     },
-})
+}
 
+-- ==========================================
+-- INICIALIZAÇÃO DA JANELA
+-- ==========================================
+
+local Window = Starlight:CreateWindow(WindowConfig)
+
+-- Criação da aba Home
 Window:CreateHomeTab({
-    -- Logic is done this way to not immediately rule out unknown executors.
-    -- For example, if Delta is confirmed to break with your script, it can go in Unsupported.
-    -- If users use Trigon but you don't have it/unsure whether it works, it can be left out and marked as a maybe
-
-    SupportedExecutors = {}, 
-    UnsupportedExecutors = {},
-
-    DiscordInvite = "", -- The Discord Invite Link. Do Not Include discord.gg/ | Only Include the code.
-    Backdrop = nil, -- A Custom Image to use for the backdrop. Set to 0 to use the Game's Thumbnail. Defaults To A Roblox Void. Set to a blank image to not use.  
-
-    IconStyle = 2, -- 1 for solid, 2 for outline
-
+    SupportedExecutors = {
+    }, 
+    UnsupportedExecutors = {
+    },
+    
+    DiscordInvite = "",
+    Backdrop = nil,
+    IconStyle = 2,
+    
     Changelog = {
-        -- Pass Tables For Each Update
-        
         {
-            Title = "v0.1",
-            Date = "15/12/25",
-            Description = "Created Repo in github \n end",
+            Title = "v0.12",
+            Date = "16/12/25",
+            Description = "• Corrigido bug do PlaceId\n• Melhorada organização do código\n• Adicionado tratamento de erros\n• Interface otimizada"
         },
         {
             Title = "v0.11",
             Date = "16/12/25",
-            Description = "Errors Fixed \n end",
+            Description = "• Erros corrigidos\n• Melhorias gerais"
         },
+        {
+            Title = "v0.1",
+            Date = "15/12/25",
+            Description = "• Repositório criado no GitHub\n• Versão inicial"
+        }
     }
 })
 
+-- ==========================================
+-- CRIAÇÃO DAS ABAS
+-- ==========================================
+
 local Tabs = {
-    GameTab = Window:CreateTabSection("Script",true),
-    --MiscTab = Window:CreateTabSection("Misc",true),
-    --AvailableTab = Window:CreateTabSection("Available",true),
+    GameTab = Window:CreateTabSection("Script", true),
+    -- MiscTab = Window:CreateTabSection("Misc", true),
+    -- AvailableTab = Window:CreateTabSection("Available", true),
 }
 
+-- ==========================================
+-- DETECÇÃO DO JOGO
+-- ==========================================
 
+local PlaceId = game.PlaceId
+local GameName = GamesSupported[PlaceId] or "Jogo não suportado"
 
-local PID = game.PlaceId
-print("DEBUG PlaceId:", PID)
+print("========================================")
+print("BOGA HUB - Debug Info")
+print("PlaceId detectado:", PlaceId)
+print("Nome do jogo:", GameName)
+print("========================================")
 
-local G_Tab = Tabs.GameTab:CreateTab({
-    Name = game.Name,
-    Icon = NebulaIcons:GetIcon('view_in_ar', 'Material'), --[[ Icon, Source (Lucide/Material) NOTE: For Lucide, replace spaces with dash eg alarm-smoke and Material with underscore eg view_in_ar]]
+-- ==========================================
+-- CRIAÇÃO DA TAB DO JOGO
+-- ==========================================
+
+local GameTab = Tabs.GameTab:CreateTab({
+    Name = GameName,
+    Icon = NebulaIcons:GetIcon('sports_esports', 'Material'),
     Columns = 2,
-}, "_INDEX") --last param will be the for config
-local G_Groupbox = Tab:CreateGroupbox({
-    Name = "Groupbox",
-    Column = 1,
-}, "_INDEX")
+}, "GAME_TAB")
 
-if PID == 79137923166591 then -- slap
-    local Button = G_Groupbox:CreateButton({
+local GameGroupbox = GameTab:CreateGroupbox({
+    Name = GameName,
+    Column = 1,
+}, "GAME_GROUPBOX")
+
+-- ==========================================
+-- FUNÇÕES AUXILIARES
+-- ==========================================
+
+-- Função para mostrar notificação
+local function ShowNotification(title, content, icon)
+    icon = icon or 'info'
+    Starlight:Notification({
+        Title = title,
+        Icon = NebulaIcons:GetIcon(icon, 'Material'),
+        Content = content,
+    }, "Notify")
+end
+
+-- Função para carregar script com tratamento de erro
+local function LoadScript(url, scriptName)
+    local success, err = pcall(function()
+        ShowNotification("Carregando", scriptName .. " está sendo carregado...", "hourglass_empty")
+        loadstring(game:HttpGet(url, true))()
+        ShowNotification("Sucesso", scriptName .. " carregado com sucesso!", "check_circle")
+    end)
+    
+    if not success then
+        ShowNotification("Erro", "Falha ao carregar " .. scriptName .. ": " .. tostring(err), "error")
+        warn("[BOGA HUB] Erro ao carregar script:", err)
+    end
+end
+
+-- ==========================================
+-- SCRIPTS POR JOGO
+-- ==========================================
+
+if PlaceId == 79137923166591 then
+    -- SLAP
+    print("[BOGA HUB] Carregando scripts para Slap...")
+    
+    -- Botão Insta Dodge
+    GameGroupbox:CreateButton({
         Name = "Insta Dodge (PC)",
-        Icon = NebulaIcons:GetIcon('check', 'Material'),
-        Tooltip = "No Key!",
+        Icon = NebulaIcons:GetIcon('bolt', 'Material'),
+        Tooltip = "",
         Style = 1,
         Callback = function()
-            pcall(function()
-				    loadstring(game:HttpGet(
-					    'https://raw.githubusercontent.com/rapierhub/loader/refs/heads/main/Pandemonium',
-					    true
-				    ))()
-		    end)
-
-            local Notifications = Starlight:Notification({
-                Title = "Loading Script",
-                Icon = NebulaIcons:GetIcon('sparkle', 'Material'),
-                Content = "Insta Dodge Loading!",
-            }, "Notfy")
+            LoadScript(
+                'https://raw.githubusercontent.com/rapierhub/loader/refs/heads/main/Pandemonium',
+                "Insta Dodge"
+            )
         end,
-    }, "_INDEX")
-else
-    local Label = G_Groupbox:CreateLabel({
-        Name = "Game not supported"
-    }, "_INDEX")
-    local Paragraph = G_Groupbox:CreateParagraph({
-        Name = "Game not supported",
-        Content = 'Detected PlaceId: ' .. PID,
+    }, "BTN_INSTA_DODGE")
 
-    }, "_INDEX")
+else
+    -- JOGO NÃO SUPORTADO
+    print("[BOGA HUB] Jogo não suportado - PlaceId:", PlaceId)
+    
+    GameGroupbox:CreateLabel({
+        Name = "⚠️ Jogo não suportado"
+    }, "LBL_NOT_SUPPORTED")
+    
+    GameGroupbox:CreateParagraph({
+        Name = "Informações do Jogo",
+        Content = string.format(
+            "PlaceId detectado: %d\n\nEste jogo ainda não é suportado pelo Boga Hub.\n\nSugestão: Entre em contato no Discord para solicitar suporte!",
+            PlaceId
+        ),
+    }, "PARA_GAME_INFO")
+    
+    GameGroupbox:CreateButton({
+        Name = "Copiar PlaceId",
+        Icon = NebulaIcons:GetIcon('content_copy', 'Material'),
+        Tooltip = "Copiar ID do jogo para a área de transferência",
+        Style = 2,
+        Callback = function()
+            setclipboard(tostring(PlaceId))
+            ShowNotification("Copiado", "PlaceId copiado: " .. PlaceId, "check")
+        end,
+    }, "BTN_COPY_ID")
 end
+
+-- ==========================================
+-- FINALIZAÇÃO
+-- ==========================================
+
+print("[BOGA HUB] Script carregado com sucesso!")
+ShowNotification(
+    "Bem-vindo ao Boga Hub!", 
+    "Script carregado com sucesso. Versão: " .. WindowConfig.Subtitle,
+    "rocket_launch"
+)
