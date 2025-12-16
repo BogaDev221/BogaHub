@@ -9,6 +9,7 @@ Developed by @Boda_Grande
 - **Murder Mystery 2**
 - **Flee The Facility**
 - **Forsaken**
+- **Spider**
 
 > More games will be added in future updates.
 
