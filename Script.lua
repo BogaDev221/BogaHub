@@ -4,7 +4,7 @@ local NebulaIcons = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/neb
 
 local Window = Starlight:CreateWindow({
     Name = "Boga Hub",
-    Subtitle = "v0.1",
+    Subtitle = "v0.11",
     Icon = 9980452590,
 
     LoadingSettings = {
