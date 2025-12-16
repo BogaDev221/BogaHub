@@ -1,6 +1,6 @@
-local Starlight = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/starlight"))()  
+local Starlight = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nebula-Softworks/Starlight-Interface-Suite/master/Source.lua"))()  
 
-local NebulaIcons = loadstring(game:HttpGet("https://raw.nebulasoftworks.xyz/nebula-icon-library-loader"))()
+local NebulaIcons = loadstring(game:HttpGet("https://raw.githubusercontent.com/Nebula-Softworks/Nebula-Icon-Library/master/Loader.lua"))()
 
 local Window = Starlight:CreateWindow({
     Name = "Boga Hub",
@@ -9,7 +9,7 @@ local Window = Starlight:CreateWindow({
 
     LoadingSettings = {
         Title = "Boga Hub",
-        Subtitle = "Welcome to Boga Hub",
+        Subtitle = "Created by @boda_Grande",
         Logo = 9980452590
     },
 
@@ -39,6 +39,11 @@ Window:CreateHomeTab({
             Date = "15/12/25",
             Description = "Created Repo in github \n end",
         },
+        {
+            Title = "v0.11",
+            Date = "16/12/25",
+            Description = "Errors Fixed \n end",
+        },
     }
 })
 
@@ -48,21 +53,27 @@ local Tabs = {
     --AvailableTab = Window:CreateTabSection("Available",true),
 }
 
-local GameTabGroup = Tabs.GameTab:CreateGroupbox({
-    Name = "GameTabGroup",
-    Column = 1,
-}, "GameTabGroup")
-local Text = GameTabGroup:CreateLabel({
-        Name = "Game Tab"
-}, "GameTabGroup")
+
 
 local PID = game.PlaceId
 print("DEBUG PlaceId:", PID)
 
+local G_Tab = Tabs.GameTab:CreateTab({
+    Name = game.Name,
+    Icon = NebulaIcons:GetIcon('view_in_ar', 'Material'), --[[ Icon, Source (Lucide/Material) NOTE: For Lucide, replace spaces with dash eg alarm-smoke and Material with underscore eg view_in_ar]]
+    Columns = 2,
+}, "_INDEX") --last param will be the for config
+local G_Groupbox = Tab:CreateGroupbox({
+    Name = "Groupbox",
+    Column = 1,
+}, "_INDEX")
+
 if PID == 79137923166591 then -- slap
-	local Button = GameTabGroup:CreateButton({
+    local Button = G_Groupbox:CreateButton({
         Name = "Insta Dodge (PC)",
         Icon = NebulaIcons:GetIcon('check', 'Material'),
+        Tooltip = "No Key!",
+        Style = 1,
         Callback = function()
             pcall(function()
 				    loadstring(game:HttpGet(
@@ -77,10 +88,14 @@ if PID == 79137923166591 then -- slap
                 Content = "Insta Dodge Loading!",
             }, "Notfy")
         end,
-    }, "GameTabGroup")
+    }, "_INDEX")
 else
-	Tabs.GameTab:Paragraph({
-		Title = 'Game not supported',
-		Content = 'Detected PlaceId: ' .. PID
-	})
+    local Label = G_Groupbox:CreateLabel({
+        Name = "Game not supported"
+    }, "_INDEX")
+    local Paragraph = G_Groupbox:CreateParagraph({
+        Name = "Game not supported",
+        Content = 'Detected PlaceId: ' .. PID,
+
+    }, "_INDEX")
 end
