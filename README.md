@@ -6,6 +6,9 @@ Developed by @Boda_Grande
 
 ## 🎮 Supported Games
 - **[UPD] Slap**
+- **Murder Mystery 2**
+- **Flee The Facility**
+- **Forsaken**
 
 > More games will be added in future updates.
 
